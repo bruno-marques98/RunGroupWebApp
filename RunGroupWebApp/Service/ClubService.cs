@@ -35,10 +35,15 @@ namespace RunGroupWebApp.Service
             return await _dbContext.Clubs.Where(c => c.Address.City.Contains(city)).ToListAsync();
         }
 
+        public async Task<Club> GetClubByIdAsyncNoTracking(int id)
+        {
+            return await _dbContext.Clubs.Include(i => i.Address).AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+        }
         public async Task<Club> GetClubByIdAsync(int id)
         {
             return await _dbContext.Clubs.Include(i => i.Address).FirstOrDefaultAsync(i => i.Id == id);
         }
+
 
         public bool Save()
         {

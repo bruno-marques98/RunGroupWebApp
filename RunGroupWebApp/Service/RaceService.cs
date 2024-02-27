@@ -34,6 +34,10 @@ namespace RunGroupWebApp.Service
         {
             return await _dbContext.Races.Where(c => c.Address.City.Contains(city)).ToListAsync();
         }
+        public async Task<Race> GetRaceByIdAsyncNoTracking(int id)
+        {
+            return await _dbContext.Races.Include(i => i.Address).AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+        }
 
         public async Task<Race> GetRacesByIdAsync(int id)
         {
